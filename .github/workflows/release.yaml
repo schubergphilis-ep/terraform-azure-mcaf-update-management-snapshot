@@ -1,0 +1,18 @@
+# WARNING: This file is managed automatically and may be overwritten at any time.
+
+name: Release
+
+on:
+  push:
+    branches: [main, master]
+
+permissions: {}
+
+jobs:
+  Release:
+    uses: schubergphilis-ep/github-terraform-workflows/.github/workflows/module-release.yaml@2c0d8dabe4c500d55b95bfb872c4eeb8ba3b41d7 # v2.3.2
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    secrets: inherit
