@@ -47,8 +47,9 @@ locals {
 }
 
 # The team setup: three weekly patch groups on Monday evening, Linux and Windows mixed per group.
+# Needs terraform-azure-mcaf-update-management v0.3.0 or later (snapshot_managed and the resource_group_name output).
 module "patching" {
-  source = "github.com/schubergphilis-ep/terraform-azure-mcaf-update-management"
+  source = "github.com/schubergphilis-ep/terraform-azure-mcaf-update-management?ref=v0.3.0"
 
   resource_group_name = "rg-${var.customer_acronym}${var.environment}-${var.workload}"
   location            = "westeurope"
