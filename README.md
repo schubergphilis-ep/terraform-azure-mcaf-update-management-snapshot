@@ -157,7 +157,7 @@ Current sandbox scale: 86 Linux masks and 1 Windows KB.
 ## Requirements
 
 | Name | Version |
-| ---- | ------- |
+|------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9 |
 | <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | ~> 2.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4, < 6 |
@@ -165,9 +165,9 @@ Current sandbox scale: 86 Linux masks and 1 Windows KB.
 ## Providers
 
 | Name | Version |
-| ---- | ------- |
-| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | 2.13.0 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 5.8.0 |
+|------|---------|
+| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | ~> 2.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4, < 6 |
 
 ## Modules
 
@@ -176,7 +176,7 @@ No modules.
 ## Resources
 
 | Name | Type |
-| ---- | ---- |
+|------|------|
 | [azapi_resource.snapshot](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) | resource |
 | [azurerm_monitor_metric_alert.runs_failed](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_metric_alert) | resource |
 | [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
@@ -185,7 +185,8 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-| ---- | ----------- | ---- | ------- | :------: |
+|------|-------------|------|---------|:--------:|
+| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the existing resource group in which the Logic Apps are created. | `string` | n/a | yes |
 | <a name="input_assign_roles"></a> [assign\_roles](#input\_assign\_roles) | Assign Reader and Scheduled Patching Contributor to the Logic App identity on every entry of `management_group_ids` or `subscription_ids`. Disable when roles are managed elsewhere; the principal ID is in the `principal_id` output. | `bool` | `true` | no |
 | <a name="input_exclude_subscription_ids"></a> [exclude\_subscription\_ids](#input\_exclude\_subscription\_ids) | Subscriptions to leave out, typically under one of `management_group_ids`. Their assessment data is ignored and their maintenance configurations are not touched. The role assignments on a management group still apply to them. | `list(string)` | `[]` | no |
 | <a name="input_failed_run_alert"></a> [failed\_run\_alert](#input\_failed\_run\_alert) | Alert when a snapshot run fails (no recent assessment data, write not persisted, missing permissions): a metric<br/>alert on the Logic App's `RunsFailed`. No alert when null. An object rather than a plain ID, so the alert can be planned while<br/>the action group is created in the same apply.<br/><br/>- `action_group_id` - (Required) Action group to notify.<br/>- `severity` - (Optional) Alert severity 0-4. Defaults to `2`. | <pre>object({<br/>    action_group_id = string<br/>    severity        = optional(number, 2)<br/>  })</pre> | `null` | no |
@@ -193,7 +194,6 @@ No modules.
 | <a name="input_management_group_ids"></a> [management\_group\_ids](#input\_management\_group\_ids) | Management groups the snapshot covers: every subscription below them is read and its maintenance configurations tagged `aum-snapshot = managed` are updated. Use this or `subscription_ids`, not both. | `list(string)` | `[]` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of the Logic App. | `string` | `"update-snapshot"` | no |
 | <a name="input_operating_systems"></a> [operating\_systems](#input\_operating\_systems) | Which operating systems the snapshot handles, and which pending updates go into the frozen list.<br/><br/>- `windows.enabled` / `linux.enabled` - (Optional) Snapshot this OS. A disabled OS block on a maintenance configuration is left untouched. Defaults to `true`.<br/>- `windows.classifications` - (Optional) Only freeze these classifications. Empty means everything the assessment reports. Definition updates are never frozen. Possible values: Critical, Security, UpdateRollup, FeaturePack, ServicePack, Tools, Updates.<br/>- `linux.classifications` - (Optional) Same for Linux. Possible values: Critical, Security, Other. | <pre>object({<br/>    windows = optional(object({<br/>      enabled         = optional(bool, true)<br/>      classifications = optional(list(string), [])<br/>    }), {})<br/>    linux = optional(object({<br/>      enabled         = optional(bool, true)<br/>      classifications = optional(list(string), [])<br/>    }), {})<br/>  })</pre> | `{}` | no |
-| <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the existing resource group in which the Logic Apps are created. | `string` | n/a | yes |
 | <a name="input_schedule"></a> [schedule](#input\_schedule) | When the snapshot is taken.<br/><br/>- `cadence` - (Optional) `weekly` or `monthly`. Defaults to `weekly`.<br/>- `weekday` - (Optional) Weekday for `weekly`. Defaults to `Monday`.<br/>- `patch_tuesday_offset_days` - (Optional) For `monthly`: days after Patch Tuesday (second Tuesday), 0-17. 0 is Patch Tuesday itself, 1 the Wednesday after, 6 the Monday after. The weekday follows from the offset. Defaults to `6`.<br/>- `hour` - (Optional) Hour, 0-23. Defaults to `7`.<br/>- `minute` - (Optional) Minute, 0-59. Defaults to `0`.<br/>- `time_zone` - (Optional) Windows time zone name. Defaults to `W. Europe Standard Time`.<br/><br/>Every maintenance window that should use the new list must start after this moment. | <pre>object({<br/>    cadence                   = optional(string, "weekly")<br/>    weekday                   = optional(string, "Monday")<br/>    patch_tuesday_offset_days = optional(number, 6)<br/>    hour                      = optional(number, 7)<br/>    minute                    = optional(number, 0)<br/>    time_zone                 = optional(string, "W. Europe Standard Time")<br/>  })</pre> | `{}` | no |
 | <a name="input_subscription_ids"></a> [subscription\_ids](#input\_subscription\_ids) | Subscriptions the snapshot covers. Use this or `management_group_ids`, not both. | `list(string)` | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resources. | `map(string)` | `{}` | no |
@@ -201,7 +201,7 @@ No modules.
 ## Outputs
 
 | Name | Description |
-| ---- | ----------- |
+|------|-------------|
 | <a name="output_alert_id"></a> [alert\_id](#output\_alert\_id) | ID of the failed-run metric alert. Null when `failed_run_alert` is null. |
 | <a name="output_logic_app_id"></a> [logic\_app\_id](#output\_logic\_app\_id) | Resource ID of the snapshot Logic App. |
 | <a name="output_principal_id"></a> [principal\_id](#output\_principal\_id) | Principal ID of the Logic App's system-assigned identity. Use it when `assign_roles = false`. |
