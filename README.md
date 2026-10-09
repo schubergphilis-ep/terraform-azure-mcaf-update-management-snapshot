@@ -46,12 +46,14 @@ configurations there, and point this module at the same resource group and subsc
 
 ```hcl
 module "patching" {
-  source = "github.com/schubergphilis-ep/terraform-azure-mcaf-update-management"
+  source  = "schubergphilis-ep/mcaf-update-management/azure"
+  version = "~> 0.3"
   # ... maintenance_configurations with snapshot_managed = true
 }
 
 module "update_snapshot" {
-  source = "github.com/schubergphilis-ep/terraform-azure-mcaf-update-management-snapshot"
+  source = "schubergphilis-ep/mcaf-update-management-snapshot/azure"
+  # version = pin to the latest release
 
   resource_group_name = module.patching.resource_group_name
   subscription_ids    = ["00000000-0000-0000-0000-000000000000"]
