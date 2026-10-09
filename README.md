@@ -97,7 +97,7 @@ subscription, only critical and security updates frozen, and an alert.
 
 ## Provider versions
 
-Works with azurerm 4.x and 5.x. azurerm 5.0 no longer registers resource providers by default; make sure
+Works with azurerm 4.x and 5.x; only the minimum provider versions are constrained, so pin them in your root module. azurerm 5.0 no longer registers resource providers by default; make sure
 `Microsoft.Maintenance`, `Microsoft.Logic` and, for alerts, `Microsoft.Insights` are registered, for example with
 `resource_providers_to_register` in the provider block as shown in the examples.
 
@@ -159,15 +159,15 @@ Current sandbox scale: 86 Linux masks and 1 Windows KB.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.9 |
-| <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | ~> 2.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4, < 6 |
+| <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | >= 2 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 4 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | ~> 2.0 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4, < 6 |
+| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | >= 2 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 4 |
 
 ## Modules
 
